@@ -2,7 +2,7 @@
   <div class="flex flex-col h-full">
     <h2 class="p-4 text-lg md:text-xl font-bold">Chat</h2>
     <UDivider />
-    <div ref="chatContainer" class="flex-1 overflow-y-auto p-4 space-y-6">
+    <div ref="chatContainer" class="flex-1 overflow-y-auto p-4 space-y-5">
       <div
         v-for="(message, index) in chatHistory"
         :key="index"
@@ -26,10 +26,7 @@
             }`"
           />
         </div>
-        <MDC
-          class="max-w-none prose dark:prose-invert"
-          :value="message.content"
-        />
+        <MDC class="flex-1 prose dark:prose-invert" :value="message.content" />
       </div>
     </div>
     <UDivider />
