@@ -27,40 +27,6 @@
         :max="4096"
       />
 
-      <RangeInput
-        v-model="llmParams.topP"
-        label="Top P"
-        :min="0"
-        :max="2"
-        :step="0.1"
-      />
-
-      <RangeInput v-model="llmParams.topK" label="Top K" :min="1" :max="50" />
-
-      <RangeInput
-        v-model="llmParams.frequencyPenalty"
-        label="Frequency Penalty"
-        :min="0"
-        :max="2"
-        :step="0.1"
-      />
-
-      <RangeInput
-        v-model="llmParams.presencePenalty"
-        label="Presence Penalty"
-        :min="0"
-        :max="2"
-        :step="0.1"
-      />
-
-      <RangeInput
-        v-model="llmParams.repetitionPenalty"
-        label="Repetition Penalty"
-        :min="0"
-        :max="2"
-        :step="0.1"
-      />
-
       <UFormGroup label="System Prompt">
         <UTextarea
           v-model="llmParams.systemPrompt"
@@ -69,6 +35,56 @@
           autoresize
         />
       </UFormGroup>
+
+      <UAccordion
+        :items="accordionItems"
+        color="white"
+        variant="solid"
+        size="md"
+      >
+        <template #item>
+          <UCard :ui="{ body: { base: 'space-y-6', padding: 'p-4 sm:p-4' } }">
+            <RangeInput
+              v-model="llmParams.topP"
+              label="Top P"
+              :min="0"
+              :max="2"
+              :step="0.1"
+            />
+
+            <RangeInput
+              v-model="llmParams.topK"
+              label="Top K"
+              :min="1"
+              :max="50"
+            />
+
+            <RangeInput
+              v-model="llmParams.frequencyPenalty"
+              label="Frequency Penalty"
+              :min="0"
+              :max="2"
+              :step="0.1"
+            />
+
+            <RangeInput
+              v-model="llmParams.presencePenalty"
+              label="Presence Penalty"
+              :min="0"
+              :max="2"
+              :step="0.1"
+            />
+
+            <RangeInput
+              v-model="llmParams.repetitionPenalty"
+              label="Repetition Penalty"
+              :min="0"
+              :max="2"
+              :step="0.1"
+            />
+          </UCard>
+        </template>
+      </UAccordion>
     </div>
   </div>
 </template>
@@ -91,4 +107,11 @@ const llmParams = defineModel('llmParams', {
 });
 
 defineEmits(['toggleDrawer']);
+
+const accordionItems = [
+  {
+    label: 'Advanced Settings',
+    defaultOpen: false,
+  },
+];
 </script>
