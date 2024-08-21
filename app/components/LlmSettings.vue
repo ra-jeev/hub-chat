@@ -12,6 +12,10 @@
     </div>
     <UDivider />
     <div class="p-4 flex-1 space-y-6 overflow-y-auto">
+      <UFormGroup label="Model">
+        <USelectMenu v-model="llmParams.model" size="md" :options="models" />
+      </UFormGroup>
+
       <RangeInput
         v-model="llmParams.temperature"
         label="Temperature"
@@ -91,6 +95,7 @@
 
 <script setup lang="ts">
 type LlmParams = {
+  model: string;
   temperature: number;
   maxTokens: number;
   topP: number;
@@ -113,5 +118,41 @@ const accordionItems = [
     label: 'Advanced Settings',
     defaultOpen: false,
   },
+];
+
+const models = [
+  'deepseek-coder-6.7b-base-awq',
+  'deepseek-coder-6.7b-instruct-awq',
+  'deepseek-math-7b-instruct',
+  'discolm-german-7b-v1-awq',
+  'falcon-7b-instruct',
+  'gemma-7b-it',
+  'hermes-2-pro-mistral-7b',
+  'llama-2-13b-chat-awq',
+  'llama-2-7b-chat-fp16',
+  'llama-2-7b-chat-int8',
+  'llama-3-8b-instruct',
+  'llama-3-8b-instruct-awq',
+  'llama-3.1-8b-instruct',
+  'llama-3.1-8b-instruct-awq',
+  'llama-3.1-8b-instruct-fp8',
+  'llamaguard-7b-awq',
+  'meta-llama-3-8b-instruct',
+  'mistral-7b-instruct-v0.1',
+  'mistral-7b-instruct-v0.1-awq',
+  'mistral-7b-instruct-v0.2',
+  'neural-chat-7b-v3-1-awq',
+  'openchat-3.5-0106',
+  'openhermes-2.5-mistral-7b-awq',
+  'phi-2',
+  'qwen1.5-0.5b-chat',
+  'qwen1.5-1.8b-chat',
+  'qwen1.5-14b-chat-awq',
+  'qwen1.5-7b-chat-awq',
+  'sqlcoder-7b-2',
+  'starling-lm-7b-beta',
+  'tinyllama-1.1b-chat-v1.0',
+  'una-cybertron-7b-v2-bf16',
+  'zephyr-7b-beta-awq',
 ];
 </script>
