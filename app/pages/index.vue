@@ -42,6 +42,7 @@
 const isDrawerOpen = ref(false);
 const chatHistory = ref<{ role: string; content: string }[]>([]);
 const llmParams = reactive({
+  model: 'llama-3.1-8b-instruct',
   temperature: 0.6,
   maxTokens: 256,
   topP: 0,
