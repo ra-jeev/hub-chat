@@ -8,7 +8,9 @@ export default defineNuxtConfig({
   modules: ['@nuxthub/core', '@nuxt/eslint', '@nuxt/ui', '@nuxtjs/mdc'],
 
   // https://hub.nuxt.com/docs/getting-started/installation#options
-  hub: {},
+  hub: {
+    ai: true,
+  },
 
   // https://eslint.nuxt.com
   eslint: {
