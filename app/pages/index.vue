@@ -1,63 +1,73 @@
-<script setup>
-const runtimeConfig = useRuntimeConfig();
-const colors = [
-  '#f87171',
-  '#fb923c',
-  '#fbbf24',
-  '#facc15',
-  '#a3e635',
-  '#4ade80',
-  '#34d399',
-  '#2dd4bf',
-  '#22d3ee',
-  '#38bdf8',
-  '#60a5fa',
-  '#818cf8',
-  '#a78bfa',
-  '#c084fc',
-  '#e879f9',
-  '#f472b6',
-  '#fb7185',
-];
-const color = useState(
-  'color',
-  () => colors[Math.floor(Math.random() * colors.length)]
-);
-</script>
-
 <template>
-  <div class="centered">
-    <h1 :style="{ color }">{{ runtimeConfig.public.helloText }}</h1>
-    <NuxtLink to="/" external>refresh</NuxtLink>
+  <div class="h-screen flex flex-col md:flex-row">
+    <div class="flex gap-x-4 fixed top-4 right-4 z-10">
+      <ColorMode />
+      <UButton
+        icon="i-heroicons-cog-6-tooth"
+        color="gray"
+        variant="ghost"
+        class="md:hidden"
+        @click="isDrawerOpen = true"
+      />
+    </div>
+
+    <USlideover
+      v-model="isDrawerOpen"
+      class="md:hidden"
+      :ui="{ width: 'max-w-xs' }"
+    >
+      <LlmSettings
+        v-model:llmParams="llmParams"
+        @toggle-drawer="isDrawerOpen = false"
+      />
+    </USlideover>
+
+    <div class="hidden md:block md:w-1/3 lg:w-1/4">
+      <LlmSettings v-model:llmParams="llmParams" />
+    </div>
+
+    <UDivider orientation="vertical" class="hidden md:block" />
+
+    <div class="flex-grow md:w-2/3 lg:w-3/4">
+      <ChatPanel
+        :chat-history="chatHistory"
+        :llm-params="llmParams"
+        @message="sendMessage"
+      />
+    </div>
   </div>
 </template>
 
-<style scoped>
-.centered {
-  position: absolute;
-  width: 100%;
-  text-align: center;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  margin: 0;
-  font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto,
-    Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
-}
-h1 {
-  font-size: 32px;
-}
-@media (min-width: 768px) {
-  h1 {
-    font-size: 64px;
+<script setup lang="ts">
+const isDrawerOpen = ref(false);
+const chatHistory = ref<{ role: string; content: string }[]>([]);
+const llmParams = reactive({
+  temperature: 0.6,
+  maxTokens: 256,
+  topP: 0,
+  topK: 1,
+  frequencyPenalty: 0,
+  presencePenalty: 0,
+  repetitionPenalty: 0,
+  systemPrompt: 'You are a helpful assistant.',
+});
+
+async function sendMessage(message: string) {
+  chatHistory.value.push({ role: 'user', content: message });
+
+  try {
+    const response = await $fetch('/api/chat', {
+      method: 'POST',
+      body: {
+        message,
+        params: llmParams,
+      },
+    });
+
+    chatHistory.value.push({ role: 'assistant', content: response.message });
+  } catch (error) {
+    console.error('Error sending message:', error);
+    // Handle error (e.g., show an error message to the user)
   }
 }
-a {
-  color: #888;
-  text-decoration: none;
-  font-size: 18px;
-}
-a:hover {
-  text-decoration: underline;
-}
-</style>
+</script>
