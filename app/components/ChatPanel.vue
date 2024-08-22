@@ -5,7 +5,7 @@
     <div ref="chatContainer" class="flex-1 overflow-y-auto p-4 space-y-5">
       <div
         v-for="(message, index) in chatHistory"
-        :key="index"
+        :key="`message-${index}`"
         class="flex items-start gap-x-4"
       >
         <div
@@ -17,7 +17,7 @@
           <UIcon
             :name="`${
               message.role === 'user'
-                ? 'i-heroicons-user-circle-20-solid'
+                ? 'i-mdi-user'
                 : 'i-heroicons-sparkles-solid'
             }`"
             class="w-8 h-8"
@@ -26,7 +26,10 @@
             }`"
           />
         </div>
-        <MDC class="flex-1 prose dark:prose-invert" :value="message.content" />
+        <div v-if="message.role === 'user'">
+          {{ message.content }}
+        </div>
+        <AssistantMessage v-else :content="message.content" />
       </div>
     </div>
     <UDivider />
@@ -38,7 +41,7 @@
         :ui="{ padding: { xl: 'pr-11' } }"
         :rows="1"
         :maxrows="5"
-        :disabled="isLoading"
+        :disabled="isStreaming"
         autoresize
         size="xl"
         @keydown.enter.exact.prevent="sendMessage"
@@ -48,7 +51,7 @@
       <UButton
         icon="i-heroicons-paper-airplane"
         class="absolute top-5 right-5"
-        :disabled="isLoading"
+        :disabled="isStreaming"
         @click="sendMessage"
       />
     </div>
@@ -56,27 +59,46 @@
 </template>
 
 <script setup lang="ts">
-defineProps<{ chatHistory: { role: string; content: string }[] }>();
+defineProps<{
+  chatHistory: { role: string; content: string }[];
+  isStreaming: boolean;
+}>();
 
 const emit = defineEmits<{
   message: [message: string];
 }>();
 
 const userMessage = ref('');
-const isLoading = ref(false);
 const chatContainer = ref<HTMLElement | null>(null);
+let observer: MutationObserver | null = null;
+
+onMounted(() => {
+  if (chatContainer.value) {
+    observer = new MutationObserver(() => {
+      if (chatContainer.value) {
+        chatContainer.value.scrollTop = chatContainer.value.scrollHeight;
+      }
+    });
+
+    observer.observe(chatContainer.value, {
+      childList: true,
+      subtree: true,
+      characterData: true,
+    });
+  }
+});
+
+onUnmounted(() => {
+  if (observer) {
+    observer.disconnect();
+  }
+});
 
 const sendMessage = () => {
   if (!userMessage.value.trim()) return;
 
-  isLoading.value = true;
-  const message = userMessage.value;
-  userMessage.value = '';
+  emit('message', userMessage.value);
 
-  try {
-    emit('message', message);
-  } finally {
-    isLoading.value = false;
-  }
+  userMessage.value = '';
 };
 </script>
