@@ -12,19 +12,6 @@ export default defineNuxtConfig({
     ai: true,
   },
 
-  // https://eslint.nuxt.com
-  eslint: {
-    config: {
-      stylistic: {
-        quotes: 'single',
-        semi: true,
-        commaDangle: 'only-multiline',
-        braceStyle: '1tbs',
-        arrowParens: true,
-      },
-    },
-  },
-
   // https://devtools.nuxt.com
   devtools: { enabled: true },
 });
