@@ -31,7 +31,7 @@
     <div class="flex-grow md:w-2/3 lg:w-3/4">
       <ChatPanel
         :chat-history="chatHistory"
-        :llm-params="llmParams"
+        :is-streaming="streaming"
         @message="sendMessage"
       />
     </div>
@@ -41,15 +41,16 @@
 <script setup lang="ts">
 const isDrawerOpen = ref(false);
 const chatHistory = ref<{ role: string; content: string }[]>([]);
+const streaming = ref(false);
+
 const llmParams = reactive({
   model: '@cf/meta/llama-3.1-8b-instruct',
   temperature: 0.6,
-  maxTokens: 256,
-  topP: 0,
+  maxTokens: 512,
+  topP: 1,
   topK: 1,
   frequencyPenalty: 0,
   presencePenalty: 0,
-  repetitionPenalty: 0,
   systemPrompt: 'You are a helpful assistant.',
 });
 
@@ -57,18 +58,59 @@ async function sendMessage(message: string) {
   chatHistory.value.push({ role: 'user', content: message });
 
   try {
-    const response = await $fetch('/api/chat', {
+    streaming.value = true;
+    const response = await $fetch<ReadableStream>('/api/chat', {
       method: 'POST',
       body: {
-        message,
+        messages: chatHistory.value,
         params: llmParams,
       },
+      responseType: 'stream',
     });
 
-    chatHistory.value.push({ role: 'assistant', content: response.message });
+    const reader = response.pipeThrough(new TextDecoderStream()).getReader();
+
+    let responseAdded = false;
+
+    // Read the chunk of data as we get it
+    while (true) {
+      const { value, done } = await reader.read();
+
+      if (done) {
+        break;
+      }
+
+      const lines = value.split('\n');
+      for (const line of lines) {
+        if (line.startsWith('data: ')) {
+          const data = line.slice('data: '.length);
+          if (data === '[DONE]') {
+            break;
+          } else {
+            const jsonData = JSON.parse(data);
+            if (jsonData.response) {
+              if (responseAdded) {
+                // add the response to the current message
+                chatHistory.value[chatHistory.value.length - 1]!.content +=
+                  jsonData.response;
+              } else {
+                // add a new message to the chat history
+                chatHistory.value.push({
+                  role: 'assistant',
+                  content: jsonData.response,
+                });
+
+                responseAdded = true;
+              }
+            }
+          }
+        }
+      }
+    }
   } catch (error) {
     console.error('Error sending message:', error);
-    // Handle error (e.g., show an error message to the user)
+  } finally {
+    streaming.value = false;
   }
 }
 </script>
