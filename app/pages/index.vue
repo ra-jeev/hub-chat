@@ -31,7 +31,7 @@
     <div class="flex-grow md:w-2/3 lg:w-3/4">
       <ChatPanel
         :chat-history="chatHistory"
-        :is-streaming="streaming"
+        :loading="loading"
         @message="sendMessage"
       />
     </div>
@@ -39,11 +39,9 @@
 </template>
 
 <script setup lang="ts">
-import type { ChatMessage, LlmParams } from '~~/types';
+import type { ChatMessage, LlmParams, LoadingType } from '~~/types';
 
 const isDrawerOpen = ref(false);
-const chatHistory = ref<ChatMessage[]>([]);
-const streaming = ref(false);
 
 const llmParams = reactive<LlmParams>({
   model: '@cf/meta/llama-3.1-8b-instruct',
@@ -57,63 +55,50 @@ const llmParams = reactive<LlmParams>({
   stream: true,
 });
 
+const { getResponse, streamResponse } = useChat();
+const chatHistory = ref<ChatMessage[]>([]);
+const loading = ref<LoadingType>('idle');
 async function sendMessage(message: string) {
   chatHistory.value.push({ role: 'user', content: message });
 
   try {
-    streaming.value = true;
-    const response = await $fetch<ReadableStream>('/api/chat', {
-      method: 'POST',
-      body: {
-        messages: chatHistory.value,
-        params: llmParams,
-      },
-      responseType: 'stream',
-    });
+    if (llmParams.stream) {
+      loading.value = 'stream';
+      const messageGenerator = streamResponse(
+        '/api/chat',
+        chatHistory.value,
+        llmParams
+      );
 
-    const reader = response.pipeThrough(new TextDecoderStream()).getReader();
+      let responseAdded = false;
+      for await (const chunk of messageGenerator) {
+        if (responseAdded) {
+          // add the response to the current message
+          chatHistory.value[chatHistory.value.length - 1]!.content += chunk;
+        } else {
+          // add a new message to the chat history
+          chatHistory.value.push({
+            role: 'assistant',
+            content: chunk,
+          });
 
-    let responseAdded = false;
-
-    // Read the chunk of data as we get it
-    while (true) {
-      const { value, done } = await reader.read();
-
-      if (done) {
-        break;
-      }
-
-      const lines = value.split('\n');
-      for (const line of lines) {
-        if (line.startsWith('data: ')) {
-          const data = line.slice('data: '.length);
-          if (data === '[DONE]') {
-            break;
-          } else {
-            const jsonData = JSON.parse(data);
-            if (jsonData.response) {
-              if (responseAdded) {
-                // add the response to the current message
-                chatHistory.value[chatHistory.value.length - 1]!.content +=
-                  jsonData.response;
-              } else {
-                // add a new message to the chat history
-                chatHistory.value.push({
-                  role: 'assistant',
-                  content: jsonData.response,
-                });
-
-                responseAdded = true;
-              }
-            }
-          }
+          responseAdded = true;
         }
       }
+    } else {
+      loading.value = 'message';
+      const response = await getResponse(
+        '/api/chat',
+        chatHistory.value,
+        llmParams
+      );
+
+      chatHistory.value.push({ role: 'assistant', content: response });
     }
   } catch (error) {
     console.error('Error sending message:', error);
   } finally {
-    streaming.value = false;
+    loading.value = 'idle';
   }
 }
 </script>

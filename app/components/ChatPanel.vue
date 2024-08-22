@@ -31,6 +31,18 @@
         </div>
         <AssistantMessage v-else :content="message.content" />
       </div>
+      <div v-if="loading === 'message'" class="flex items-center space-x-4">
+        <div class="w-12 h-12 p-2 rounded-full bg-blue-500/20">
+          <UIcon
+            name="i-heroicons-sparkles-solid"
+            class="w-8 h-8 text-blue-400"
+          />
+        </div>
+        <div class="space-y-4">
+          <USkeleton class="h-4 w-[250px]" />
+          <USkeleton class="h-4 w-[200px]" />
+        </div>
+      </div>
     </div>
     <UDivider />
     <div class="flex items-start p-3.5 relative">
@@ -41,7 +53,7 @@
         :ui="{ padding: { xl: 'pr-11' } }"
         :rows="1"
         :maxrows="5"
-        :disabled="isStreaming"
+        :disabled="loading !== 'idle'"
         autoresize
         size="xl"
         @keydown.enter.exact.prevent="sendMessage"
@@ -51,7 +63,7 @@
       <UButton
         icon="i-heroicons-paper-airplane"
         class="absolute top-5 right-5"
-        :disabled="isStreaming"
+        :disabled="loading !== 'idle'"
         @click="sendMessage"
       />
     </div>
@@ -63,7 +75,7 @@ import type { ChatMessage, LoadingType } from '~~/types';
 
 defineProps<{
   chatHistory: ChatMessage[];
-  isStreaming: boolean;
+  loading: LoadingType;
 }>();
 
 const emit = defineEmits<{

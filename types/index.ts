@@ -14,3 +14,5 @@ export type ChatMessage = {
   role: string;
   content: string;
 };
+
+export type LoadingType = 'idle' | 'stream' | 'message';
