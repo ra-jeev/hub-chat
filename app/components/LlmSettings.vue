@@ -92,16 +92,7 @@
 </template>
 
 <script setup lang="ts">
-type LlmParams = {
-  model: string;
-  temperature: number;
-  maxTokens: number;
-  topP: number;
-  topK: number;
-  frequencyPenalty: number;
-  presencePenalty: number;
-  systemPrompt: string;
-};
+import type { LlmParams } from '~~/types';
 
 const llmParams = defineModel('llmParams', {
   type: Object as () => LlmParams,

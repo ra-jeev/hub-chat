@@ -39,11 +39,13 @@
 </template>
 
 <script setup lang="ts">
+import type { ChatMessage, LlmParams } from '~~/types';
+
 const isDrawerOpen = ref(false);
-const chatHistory = ref<{ role: string; content: string }[]>([]);
+const chatHistory = ref<ChatMessage[]>([]);
 const streaming = ref(false);
 
-const llmParams = reactive({
+const llmParams = reactive<LlmParams>({
   model: '@cf/meta/llama-3.1-8b-instruct',
   temperature: 0.6,
   maxTokens: 512,

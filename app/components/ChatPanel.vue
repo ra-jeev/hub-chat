@@ -59,8 +59,10 @@
 </template>
 
 <script setup lang="ts">
+import type { ChatMessage, LoadingType } from '~~/types';
+
 defineProps<{
-  chatHistory: { role: string; content: string }[];
+  chatHistory: ChatMessage[];
   isStreaming: boolean;
 }>();
 
