@@ -1,30 +1,32 @@
-const resStr = `Below are some ordered comments:
-1. Enable ai in nuxt.config.ts under hub config.
-2. Call hubAI() in your server side code to access AI Workers.
-3. Call the run method to get the response.
-
-You can use either of the following ways to get a response.
-- pass a prompt
-- pass a list of messages along with a system prompt
-
-Return some code snippet:
-
-\`\`\`ts
-const a = 1;
-\`\`\``;
-
 export default defineEventHandler(async (event) => {
-  const { message, params } = await readBody(event);
-  if (!message) {
+  const { messages, params } = await readBody(event);
+  if (!messages || messages.length === 0) {
     throw createError({
       statusCode: 400,
-      statusMessage: 'Missing message',
+      statusMessage: 'Missing messages',
     });
   }
 
-  console.log('params', params);
+  const config = {
+    max_tokens: params.maxTokens,
+    temperature: params.temperature,
+    top_p: params.topP,
+    top_k: params.topK,
+    frequency_penalty: params.frequencyPenalty,
+    presence_penalty: params.presencePenalty,
+    stream: true,
+  };
 
-  await new Promise((resolve) => setTimeout(resolve, 1000));
+  console.log('config', config);
 
-  return { message: resStr };
+  const ai = hubAI();
+
+  const stream = await ai.run(params.model, {
+    messages: params.systemPrompt
+      ? [{ role: 'system', content: params.systemPrompt }, ...messages]
+      : messages,
+    ...config,
+  });
+
+  return sendStream(event, stream as ReadableStream);
 });
