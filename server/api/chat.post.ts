@@ -14,19 +14,23 @@ export default defineEventHandler(async (event) => {
     top_k: params.topK,
     frequency_penalty: params.frequencyPenalty,
     presence_penalty: params.presencePenalty,
-    stream: true,
+    stream: params.stream,
   };
-
-  console.log('config', config);
 
   const ai = hubAI();
 
-  const stream = await ai.run(params.model, {
+  const result = await ai.run(params.model, {
     messages: params.systemPrompt
       ? [{ role: 'system', content: params.systemPrompt }, ...messages]
       : messages,
     ...config,
   });
 
-  return sendStream(event, stream as ReadableStream);
+  return params.stream
+    ? sendStream(event, result as ReadableStream)
+    : (
+        result as {
+          response: string;
+        }
+      ).response;
 });
