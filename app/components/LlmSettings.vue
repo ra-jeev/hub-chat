@@ -84,14 +84,6 @@
               :max="2"
               :step="0.1"
             />
-
-            <RangeInput
-              v-model="llmParams.repetitionPenalty"
-              label="Repetition Penalty"
-              :min="0"
-              :max="2"
-              :step="0.1"
-            />
           </UCard>
         </template>
       </UAccordion>
@@ -108,7 +100,6 @@ type LlmParams = {
   topK: number;
   frequencyPenalty: number;
   presencePenalty: number;
-  repetitionPenalty: number;
   systemPrompt: string;
 };
 
