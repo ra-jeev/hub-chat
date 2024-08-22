@@ -46,6 +46,11 @@
         />
       </UFormGroup>
 
+      <div class="flex items-center justify-between">
+        <span>Stream Response</span>
+        <UToggle v-model="llmParams.stream" />
+      </div>
+
       <UAccordion
         :items="accordionItems"
         color="white"

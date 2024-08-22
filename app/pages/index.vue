@@ -54,6 +54,7 @@ const llmParams = reactive<LlmParams>({
   frequencyPenalty: 0,
   presencePenalty: 0,
   systemPrompt: 'You are a helpful assistant.',
+  stream: true,
 });
 
 async function sendMessage(message: string) {
