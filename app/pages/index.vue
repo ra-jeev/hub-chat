@@ -33,6 +33,7 @@
         :chat-history="chatHistory"
         :loading="loading"
         @message="sendMessage"
+        @clear="chatHistory = []"
       />
     </div>
   </div>

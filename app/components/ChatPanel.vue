@@ -1,6 +1,16 @@
 <template>
   <div class="flex flex-col h-full">
-    <h2 class="p-4 text-lg md:text-xl font-bold">Chat</h2>
+    <div class="flex items-center p-4 gap-x-4">
+      <h2 class="text-lg md:text-xl font-bold">Chat</h2>
+      <UTooltip text="Clear chat">
+        <UButton
+          color="gray"
+          icon="i-heroicons-trash"
+          size="xs"
+          @click="$emit('clear')"
+        />
+      </UTooltip>
+    </div>
     <UDivider />
     <div ref="chatContainer" class="flex-1 overflow-y-auto p-4 space-y-5">
       <div
@@ -89,6 +99,7 @@ defineProps<{
 
 const emit = defineEmits<{
   message: [message: string];
+  clear: [];
 }>();
 
 const userMessage = ref('');
