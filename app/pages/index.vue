@@ -19,11 +19,12 @@
       <LlmSettings
         v-model:llmParams="llmParams"
         @toggle-drawer="isDrawerOpen = false"
+        @reset="resetSettings"
       />
     </USlideover>
 
     <div class="hidden md:block md:w-1/3 lg:w-1/4">
-      <LlmSettings v-model:llmParams="llmParams" />
+      <LlmSettings v-model:llmParams="llmParams" @reset="resetSettings" />
     </div>
 
     <UDivider orientation="vertical" class="hidden md:block" />
@@ -44,7 +45,7 @@ import type { ChatMessage, LlmParams, LoadingType } from '~~/types';
 
 const isDrawerOpen = ref(false);
 
-const llmParams = reactive<LlmParams>({
+const defaultSettings: LlmParams = {
   model: '@cf/meta/llama-3.1-8b-instruct',
   temperature: 0.6,
   maxTokens: 512,
@@ -54,7 +55,12 @@ const llmParams = reactive<LlmParams>({
   presencePenalty: 0,
   systemPrompt: 'You are a helpful assistant.',
   stream: true,
-});
+};
+
+const llmParams = reactive<LlmParams>({ ...defaultSettings });
+const resetSettings = () => {
+  Object.assign(llmParams, defaultSettings);
+};
 
 const { getResponse, streamResponse } = useChat();
 const chatHistory = ref<ChatMessage[]>([]);

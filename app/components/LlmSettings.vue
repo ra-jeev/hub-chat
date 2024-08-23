@@ -1,7 +1,19 @@
 <template>
   <div class="h-full flex flex-col overflow-hidden">
     <div class="flex items-center justify-between p-4">
-      <h2 class="text-lg md:text-xl font-bold">LLM Settings</h2>
+      <div class="flex items-center gap-x-4">
+        <h2 class="md:text-lg text-gray-600 dark:text-gray-300">
+          LLM Settings
+        </h2>
+        <UTooltip text="Reset settings">
+          <UButton
+            color="gray"
+            variant="ghost"
+            icon="i-heroicons-arrow-uturn-left"
+            @click="$emit('reset')"
+          />
+        </UTooltip>
+      </div>
       <UButton
         icon="i-heroicons-x-mark-20-solid"
         color="gray"
@@ -104,7 +116,7 @@ const llmParams = defineModel('llmParams', {
   required: true,
 });
 
-defineEmits(['toggleDrawer']);
+defineEmits(['toggleDrawer', 'reset']);
 
 const accordionItems = [
   {
