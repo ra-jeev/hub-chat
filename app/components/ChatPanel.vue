@@ -43,12 +43,21 @@
           <USkeleton class="h-4 w-[200px]" />
         </div>
       </div>
+      <div
+        v-if="chatHistory.length === 0"
+        class="flex flex-col gap-y-6 items-center justify-center h-full"
+      >
+        <NoChatsImg class="w-64 h-48" />
+        <div class="text-center text-gray-500 dark:text-gray-400">
+          Ask me anything, type to get started
+        </div>
+      </div>
     </div>
     <UDivider />
     <div class="flex items-start p-3.5 relative">
       <UTextarea
         v-model="userMessage"
-        placeholder="Type something..."
+        placeholder="How can I help you today?"
         class="w-full"
         :ui="{ padding: { xl: 'pr-11' } }"
         :rows="1"
@@ -61,7 +70,7 @@
       />
 
       <UButton
-        icon="i-heroicons-paper-airplane"
+        icon="i-heroicons-arrow-up-20-solid"
         class="absolute top-5 right-5"
         :disabled="loading !== 'idle'"
         @click="sendMessage"
