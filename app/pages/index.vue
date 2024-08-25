@@ -49,10 +49,6 @@ const defaultSettings: LlmParams = {
   model: '@cf/meta/llama-3.1-8b-instruct',
   temperature: 0.6,
   maxTokens: 512,
-  topP: 1,
-  topK: 1,
-  frequencyPenalty: 0,
-  presencePenalty: 0,
   systemPrompt: 'You are a helpful assistant.',
   stream: true,
 };
