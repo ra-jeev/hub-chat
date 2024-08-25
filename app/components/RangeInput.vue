@@ -15,7 +15,8 @@
 </template>
 
 <script setup lang="ts">
-const model = defineModel({ type: Number, required: true });
+const model = defineModel({ type: Number, default: undefined });
+
 defineProps({
   label: {
     type: String,
