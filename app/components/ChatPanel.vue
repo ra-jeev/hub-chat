@@ -7,6 +7,7 @@
           color="gray"
           icon="i-heroicons-trash"
           size="xs"
+          :disabled="chatHistory.length === 0"
           @click="$emit('clear')"
         />
       </UTooltip>
