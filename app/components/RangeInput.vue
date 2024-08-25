@@ -3,6 +3,7 @@
     <template #hint>
       <UInput
         v-model="model"
+        class="w-[72px]"
         type="number"
         :min="min"
         :max="max"
