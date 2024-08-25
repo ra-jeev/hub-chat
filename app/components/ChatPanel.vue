@@ -1,7 +1,7 @@
 <template>
   <div class="flex flex-col h-full">
     <div class="flex items-center p-4 gap-x-4">
-      <h2 class="text-lg md:text-xl font-bold">Chat</h2>
+      <h2 class="text-xl md:text-2xl text-primary font-bold">Hub Chat</h2>
       <UTooltip text="Clear chat">
         <UButton
           color="gray"
