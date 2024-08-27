@@ -7,7 +7,7 @@
     >
       <LlmSettings
         v-model:llmParams="llmParams"
-        @toggle-drawer="isDrawerOpen = false"
+        @hide-drawer="isDrawerOpen = false"
         @reset="resetSettings"
       />
     </USlideover>

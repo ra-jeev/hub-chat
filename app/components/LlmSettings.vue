@@ -19,7 +19,7 @@
         color="gray"
         variant="ghost"
         class="md:hidden"
-        @click="$emit('toggleDrawer')"
+        @click="$emit('hideDrawer')"
       />
     </div>
     <UDivider />
@@ -116,7 +116,7 @@ const llmParams = defineModel('llmParams', {
   required: true,
 });
 
-defineEmits(['toggleDrawer', 'reset']);
+defineEmits(['hideDrawer', 'reset']);
 
 const accordionItems = [
   {
