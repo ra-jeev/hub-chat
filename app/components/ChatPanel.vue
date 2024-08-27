@@ -1,17 +1,10 @@
 <template>
-  <div class="flex flex-col h-full">
-    <div class="flex items-center p-4 gap-x-4">
-      <h2 class="text-xl md:text-2xl text-primary font-bold">Hub Chat</h2>
-      <UTooltip text="Clear chat">
-        <UButton
-          color="gray"
-          icon="i-heroicons-trash"
-          size="xs"
-          :disabled="chatHistory.length === 0"
-          @click="$emit('clear')"
-        />
-      </UTooltip>
-    </div>
+  <div class="flex flex-col h-full bg-gray-50 dark:bg-gray-950">
+    <ChatHeader
+      :clear-disabled="chatHistory.length === 0"
+      @clear="$emit('clear')"
+      @show-drawer="$emit('showDrawer')"
+    />
     <UDivider />
     <div ref="chatContainer" class="flex-1 overflow-y-auto p-4 space-y-5">
       <div
@@ -101,6 +94,7 @@ defineProps<{
 const emit = defineEmits<{
   message: [message: string];
   clear: [];
+  showDrawer: [];
 }>();
 
 const userMessage = ref('');

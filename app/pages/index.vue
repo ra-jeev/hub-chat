@@ -1,16 +1,5 @@
 <template>
   <div class="h-screen flex flex-col md:flex-row">
-    <div class="flex gap-x-4 fixed top-4 right-4 z-10">
-      <ColorMode />
-      <UButton
-        icon="i-heroicons-cog-6-tooth"
-        color="gray"
-        variant="ghost"
-        class="md:hidden"
-        @click="isDrawerOpen = true"
-      />
-    </div>
-
     <USlideover
       v-model="isDrawerOpen"
       class="md:hidden"
@@ -33,8 +22,9 @@
       <ChatPanel
         :chat-history="chatHistory"
         :loading="loading"
-        @message="sendMessage"
         @clear="chatHistory = []"
+        @message="sendMessage"
+        @show-drawer="isDrawerOpen = true"
       />
     </div>
   </div>
