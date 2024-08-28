@@ -19,18 +19,26 @@ export default defineEventHandler(async (event) => {
 
   const ai = hubAI();
 
-  const result = await ai.run(params.model, {
-    messages: params.systemPrompt
-      ? [{ role: 'system', content: params.systemPrompt }, ...messages]
-      : messages,
-    ...config,
-  });
+  try {
+    const result = await ai.run(params.model, {
+      messages: params.systemPrompt
+        ? [{ role: 'system', content: params.systemPrompt }, ...messages]
+        : messages,
+      ...config,
+    });
 
-  return params.stream
-    ? sendStream(event, result as ReadableStream)
-    : (
-        result as {
-          response: string;
-        }
-      ).response;
+    return params.stream
+      ? sendStream(event, result as ReadableStream)
+      : (
+          result as {
+            response: string;
+          }
+        ).response;
+  } catch (error) {
+    console.error(error);
+    throw createError({
+      statusCode: 500,
+      statusMessage: 'Error processing request',
+    });
+  }
 });
