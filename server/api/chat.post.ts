@@ -1,9 +1,9 @@
 export default defineEventHandler(async (event) => {
   const { messages, params } = await readBody(event);
-  if (!messages || messages.length === 0) {
+  if (!messages || messages.length === 0 || !params) {
     throw createError({
       statusCode: 400,
-      statusMessage: 'Missing messages',
+      statusMessage: 'Missing messages or LLM params',
     });
   }
 
