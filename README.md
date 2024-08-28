@@ -1,60 +1,70 @@
-# Hello Edge
+# Cloudflare Workers AI LLM Playground with NuxtHub and NuxtUI
 
-A minimal [Nuxt](https://nuxt.com) starter deployed on the Edge using [NuxtHub](https://hub.nuxt.com).
+## Overview
 
-https://hello.nuxt.dev
-
-<a href="https://hello.nuxt.dev">
-<img src="https://github.com/nuxt-hub/hello-edge/assets/904724/99d1bd54-ef7e-4ac9-83ad-0a290f85edcf" alt="Hello World template for NuxtHub" />
-</a>
+This project is a chat interface to interact with various text generation models supported by Cloudflare Workers AI. It allows users to set different LLM parameters, toggle response streaming, handle streaming/non-streaming responses, parse markdown in responses, and includes a dark mode.
 
 ## Features
 
-- Server-Side rendering on Cloudflare Workers
-- ESLint setup
-- Ready to add a database, blob and KV storage
-- One click deploy on 275+ locations for free
+* Set different LLM parameters (temperature, max tokens, system prompt, top_p, top_k, etc.)
+* Toggle LLM response streaming on/off
+* Handle streaming and non-streaming LLM responses on both server and client sides
+* Parse and display markdown in LLM responses
+* Auto-scroll chat container as responses are streamed
+* Dark mode support
 
-## Setup
+## Technologies Used
 
-Make sure to install the dependencies with [pnpm](https://pnpm.io/installation#using-corepack):
+* Nuxt 3: Vue.js framework for the application foundation
+* Nuxt UI: Module for creating a sleek and responsive interface
+* NuxtHub: Deployment and administration platform for Nuxt, powered by Cloudflare
+* Nuxt MDC: For parsing and displaying chat messages
+
+## Prerequisites
+
+* Cloudflare Account: Required for using Workers AI models and deploying the project on Cloudflare Pages
+* NuxtHub Admin Account: For managing NuxtHub apps
+
+## Setup Instructions
+
+1. Create a new NuxtHub project:
 
 ```bash
-pnpm install
+npx nuxthub init my-project
 ```
 
-You can update the main text displayed by creating a `.env`:
+2. Add Nuxt UI module:
 
 ```bash
-NUXT_PUBLIC_HELLO_TEXT="Hello my world!"
+npx nuxi module add ui
 ```
 
-## Development Server
+3. Add Nuxt MDC module:
 
-Start the development server on `http://localhost:3000`:
+```bash
+npx nuxi module add mdc
+```
+
+4. Run the project:
 
 ```bash
 pnpm dev
 ```
 
-## Production
+## Deployment
 
-Build the application for production:
+### Deploy via NuxtHub Admin Console:
 
-```bash
-pnpm build
-```
-
-## Deploy
-
-
-Deploy the application on the Edge with [NuxtHub](https://hub.nuxt.com) on your Cloudflare account:
+* Push your code to a GitHub repository.
+* Link the repository with NuxtHub.
+* Deploy from the Admin console.
+  
+### Deploy via NuxtHub CLI:
 
 ```bash
 npx nuxthub deploy
 ```
 
-Then checkout your server logs, analaytics and more in the [NuxtHub Admin](https://admin.hub.nuxt.com).
+## License
 
-You can also deploy using [Cloudflare Pages CI](https://hub.nuxt.com/docs/getting-started/deploy#cloudflare-pages-ci).
-
+This project is licensed under the MIT License. See the LICENSE file for details.
