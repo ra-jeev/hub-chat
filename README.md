@@ -1,11 +1,18 @@
-# Cloudflare Workers AI LLM Playground with NuxtHub and NuxtUI
+# Cloudflare Workers AI LLM Playground with Nuxt 💬
+
+[![NuxtHub AI Chat](https://github.com/user-attachments/assets/f393167e-7d21-4d7b-bacf-101103c1d093)](https://hub-chat.nuxt.dev)
+
+Demo: https://hub-chat.nuxt.dev
+
+[![Deploy to NuxtHub](https://hub.nuxt.com/button.svg)](https://hub.nuxt.com/new?repo=ra-jeev/hub-chat)
 
 ## Overview
 
-This project is a chat interface to interact with various text generation models supported by Cloudflare Workers AI. It allows users to set different LLM parameters, toggle response streaming, handle streaming/non-streaming responses, parse markdown in responses, and includes a dark mode.
+This project is a chat interface to interact with various text generation models supported by [Cloudflare Workers AI](https://ai.cloudflare.com). It allows users to set different LLM parameters, toggle response streaming, handle streaming/non-streaming responses, parse markdown in responses, and includes a dark mode.
 
 ## Features
 
+* Select the text generation model to interact with
 * Set different LLM parameters (temperature, max tokens, system prompt, top_p, top_k, etc.)
 * Toggle LLM response streaming on/off
 * Handle streaming and non-streaming LLM responses on both server and client sides
@@ -15,49 +22,51 @@ This project is a chat interface to interact with various text generation models
 
 ## Technologies Used
 
-* Nuxt 3: Vue.js framework for the application foundation
-* Nuxt UI: Module for creating a sleek and responsive interface
-* NuxtHub: Deployment and administration platform for Nuxt, powered by Cloudflare
-* Nuxt MDC: For parsing and displaying chat messages
+* [Nuxt](https://nuxt.com): Vue.js framework for the application foundation
+* [Nuxt UI](https://ui.nuxt.com): Module for creating a sleek and responsive interface
+* [Nuxt MDC](https://github.com/nuxt-modules/mdc): For parsing and displaying chat messages
+* [NuxtHub](https://hub.nuxt.com): Deployment and administration platform for Nuxt, powered by Cloudflare
 
 ## Prerequisites
 
-* Cloudflare Account: Required for using Workers AI models and deploying the project on Cloudflare Pages
-* NuxtHub Admin Account: For managing NuxtHub apps
+* [Cloudflare Account](https://cloudflare.com): Required for using Workers AI models and deploying the project on Cloudflare Pages
+* [NuxtHub Account](https://hub.nuxt.com): For managing NuxtHub apps and using AI in development
 
-## Setup Instructions
+> You can deploy and manage this application with a free Cloudflare and free NuxtHub account.
 
-1. Create a new NuxtHub project:
+## Setup
 
-```bash
-npx nuxthub init my-project
-```
-
-2. Add Nuxt UI module:
+1. Clone the repository and install the dependencies with [pnpm](https://pnpm.io/):
 
 ```bash
-npx nuxi module add ui
+pnpm i
 ```
 
-3. Add Nuxt MDC module:
+2. Link your NuxtHub project to use AI models in development (it will ask you to create one if you don't have any)
 
 ```bash
-npx nuxi module add mdc
+npx nuxthub link
 ```
 
-4. Run the project:
+3. Start the application in development mode
 
 ```bash
 pnpm dev
 ```
 
+Open http://localhost:3000 in your browser.
+
 ## Deployment
 
-### Deploy via NuxtHub Admin Console:
+[![Deploy to NuxtHub](https://hub.nuxt.com/button.svg)](https://hub.nuxt.com/new?repo=ra-jeev/hub-chat)
+
+### NuxtHub Admin
 
 * Push your code to a GitHub repository.
 * Link the repository with NuxtHub.
 * Deploy from the Admin console.
+
+[Learn more about Git integration](https://hub.nuxt.com/docs/getting-started/deploy#cloudflare-pages-ci)
   
 ### Deploy via NuxtHub CLI:
 
@@ -65,6 +74,8 @@ pnpm dev
 npx nuxthub deploy
 ```
 
+[Learn more about CLI deployment](https://hub.nuxt.com/docs/getting-started/deploy#nuxthub-cli)
+
 ## License
 
-This project is licensed under the MIT License. See the LICENSE file for details.
+This project is licensed under the MIT License. See the [LICENSE](./LICENSE) file for details.
