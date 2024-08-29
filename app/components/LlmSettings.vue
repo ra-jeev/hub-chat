@@ -5,14 +5,6 @@
         <h2 class="md:text-lg text-gray-600 dark:text-gray-300">
           LLM Settings
         </h2>
-        <UTooltip text="Reset settings">
-          <UButton
-            color="gray"
-            variant="ghost"
-            icon="i-heroicons-arrow-uturn-left"
-            @click="$emit('reset')"
-          />
-        </UTooltip>
       </div>
       <UButton
         icon="i-heroicons-x-mark-20-solid"
@@ -104,6 +96,16 @@
           </UCard>
         </template>
       </UAccordion>
+
+      <UButton
+        color="gray"
+        size="sm"
+        block
+        @click="$emit('reset')"
+      >Reset settings</UButton>
+    </div>
+    <div class="p-2">
+      <UButton to="https://hub.nuxt.com?utm_source=hub-chat" target="_blank" variant="link" color="gray" rel="noopener" size="sm">Hosted on NuxtHub</UButton>
     </div>
   </div>
 </template>

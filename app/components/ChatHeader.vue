@@ -2,18 +2,23 @@
   <div class="flex items-center justify-between p-4">
     <div class="flex items-center gap-x-4">
       <h2 class="text-xl md:text-2xl text-primary font-bold">Hub Chat</h2>
-      <UTooltip text="Clear chat">
+      <UTooltip text="Clear chat" v-if="!clearDisabled">
         <UButton
           color="gray"
           icon="i-heroicons-trash"
-          size="xs"
-          :disabled="clearDisabled"
           @click="$emit('clear')"
         />
       </UTooltip>
     </div>
     <div class="flex items-center gap-x-4">
       <ColorMode />
+      <UButton
+        icon="i-simple-icons-github"
+        color="gray"
+        variant="ghost"
+        to="https://github.com/ra-jeev/hub-chat"
+        target="_blank"
+      />
       <UButton
         icon="i-heroicons-cog-6-tooth"
         color="gray"
