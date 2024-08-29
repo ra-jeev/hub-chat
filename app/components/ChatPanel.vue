@@ -21,7 +21,7 @@
           <UIcon
             :name="`${
               message.role === 'user'
-                ? 'i-mdi-user'
+                ? 'i-heroicons-user-16-solid'
                 : 'i-heroicons-sparkles-solid'
             }`"
             class="w-8 h-8"

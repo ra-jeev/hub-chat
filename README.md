@@ -4,7 +4,7 @@
 
 Demo: https://hub-chat.nuxt.dev
 
-[![Deploy to NuxtHub](https://hub.nuxt.com/button.svg)](https://hub.nuxt.com/new?repo=ra-jeev/hub-chat)
+[![Deploy to NuxtHub](https://hub.nuxt.com/button.svg)](https://hub.nuxt.com/new?template=ai-chat)
 
 ## Overview
 
@@ -60,7 +60,7 @@ Open http://localhost:3000 in your browser.
 
 ## Deployment
 
-[![Deploy to NuxtHub](https://hub.nuxt.com/button.svg)](https://hub.nuxt.com/new?repo=ra-jeev/hub-chat)
+[![Deploy to NuxtHub](https://hub.nuxt.com/button.svg)](https://hub.nuxt.com/new?template=ai-chat)
 
 ### NuxtHub Admin
 
