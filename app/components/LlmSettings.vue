@@ -1,6 +1,6 @@
 <template>
   <div class="h-full flex flex-col overflow-hidden">
-    <div class="flex items-center justify-between p-4">
+    <div class="flex items-center justify-between px-4 h-14">
       <div class="flex items-center gap-x-4">
         <h2 class="md:text-lg text-gray-600 dark:text-gray-300">
           LLM Settings

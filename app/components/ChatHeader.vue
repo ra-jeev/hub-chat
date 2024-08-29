@@ -1,5 +1,5 @@
 <template>
-  <div class="flex items-center justify-between p-4">
+  <div class="flex items-center justify-between px-4 h-14">
     <div class="flex items-center gap-x-4">
       <h2 class="text-xl md:text-2xl text-primary font-bold">Hub Chat</h2>
       <UTooltip text="Clear chat" v-if="!clearDisabled">
