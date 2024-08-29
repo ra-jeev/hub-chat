@@ -10,6 +10,8 @@ Demo: https://hub-chat.nuxt.dev
 
 This project is a chat interface to interact with various text generation models supported by [Cloudflare Workers AI](https://ai.cloudflare.com). It allows users to set different LLM parameters, toggle response streaming, handle streaming/non-streaming responses, parse markdown in responses, and includes a dark mode.
 
+[Read the blog post on how I created this LLM playground](https://rajeev.dev/create-cloudflare-workers-ai-llm-playground-using-nuxthub-and-nuxtui).
+
 ## Features
 
 * Select the text generation model to interact with
