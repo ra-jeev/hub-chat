@@ -1,5 +1,5 @@
 <template>
-  <div class="h-screen flex flex-col md:flex-row">
+  <div class="h-dvh flex flex-col md:flex-row">
     <USlideover
       v-model="isDrawerOpen"
       class="md:hidden"
