@@ -14,6 +14,7 @@ export default defineEventHandler(async (event) => {
     top_k: params.topK,
     frequency_penalty: params.frequencyPenalty,
     presence_penalty: params.presencePenalty,
+    repetition_penalty: params.repetitionPenalty,
     stream: params.stream,
   };
 

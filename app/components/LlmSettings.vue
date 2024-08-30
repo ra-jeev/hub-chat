@@ -93,19 +93,33 @@
               :max="2"
               :step="0.1"
             />
+
+            <RangeInput
+              v-model="llmParams.repetitionPenalty"
+              label="Repetition Penalty"
+              :min="0"
+              :max="2"
+              :step="0.1"
+            />
           </UCard>
         </template>
       </UAccordion>
 
-      <UButton
-        color="gray"
-        size="sm"
-        block
-        @click="$emit('reset')"
-      >Reset settings</UButton>
+      <UButton color="gray" size="sm" block @click="$emit('reset')">
+        Reset settings
+      </UButton>
     </div>
     <div class="p-2">
-      <UButton to="https://hub.nuxt.com?utm_source=hub-chat" target="_blank" variant="link" color="gray" rel="noopener" size="sm">Hosted on NuxtHub</UButton>
+      <UButton
+        to="https://hub.nuxt.com?utm_source=hub-chat"
+        target="_blank"
+        variant="link"
+        color="gray"
+        rel="noopener"
+        size="sm"
+      >
+        Hosted on NuxtHub
+      </UButton>
     </div>
   </div>
 </template>

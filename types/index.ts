@@ -6,6 +6,7 @@ export type LlmParams = {
   topK?: number;
   frequencyPenalty?: number;
   presencePenalty?: number;
+  repetitionPenalty?: number;
   systemPrompt?: string;
   stream?: boolean;
 };
