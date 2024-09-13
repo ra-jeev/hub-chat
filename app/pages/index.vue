@@ -58,7 +58,7 @@ async function sendMessage(message: string) {
   chatHistory.value.push({ role: 'user', content: message });
 
   try {
-    if (llmParams.stream) {
+    if (llmParams.value.stream) {
       loading.value = 'stream';
       const messageGenerator = streamResponse(
         '/api/chat',
