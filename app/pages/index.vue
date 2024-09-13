@@ -13,7 +13,9 @@
     </USlideover>
 
     <div class="hidden md:block md:w-1/3 lg:w-1/4">
-      <LlmSettings v-model:llmParams="llmParams" @reset="resetSettings" />
+      <ClientOnly>
+        <LlmSettings v-model:llmParams="llmParams" @reset="resetSettings" />
+      </ClientOnly>
     </div>
 
     <UDivider orientation="vertical" class="hidden md:block" />
