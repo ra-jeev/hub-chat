@@ -31,6 +31,7 @@
 </template>
 
 <script setup lang="ts">
+import { useStorageAsync } from '@vueuse/core'
 import type { ChatMessage, LlmParams, LoadingType } from '~~/types';
 
 const isDrawerOpen = ref(false);
@@ -43,9 +44,9 @@ const defaultSettings: LlmParams = {
   stream: true,
 };
 
-const llmParams = reactive<LlmParams>({ ...defaultSettings });
+const llmParams = useStorageAsync<LlmParams>('llmParams', { ...defaultSettings });
 const resetSettings = () => {
-  Object.assign(llmParams, defaultSettings);
+  llmParams.value = { ...defaultSettings };
 };
 
 const { getResponse, streamResponse } = useChat();
