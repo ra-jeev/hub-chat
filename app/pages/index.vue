@@ -63,7 +63,7 @@ async function sendMessage(message: string) {
       const messageGenerator = streamResponse(
         '/api/chat',
         chatHistory.value,
-        llmParams
+        llmParams.value
       );
 
       let responseAdded = false;
@@ -86,7 +86,7 @@ async function sendMessage(message: string) {
       const response = await getResponse(
         '/api/chat',
         chatHistory.value,
-        llmParams
+        llmParams.value
       );
 
       chatHistory.value.push({ role: 'assistant', content: response });
