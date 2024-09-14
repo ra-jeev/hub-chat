@@ -41,6 +41,7 @@
     <UDivider />
     <div class="flex items-start p-3.5 relative">
       <UTextarea
+        ref="userInput"
         v-model="userMessage"
         placeholder="How can I help you today?"
         class="w-full"
@@ -67,7 +68,7 @@
 <script setup lang="ts">
 import type { ChatMessage, LoadingType } from '~~/types';
 
-defineProps<{
+const props = defineProps<{
   chatHistory: ChatMessage[];
   loading: LoadingType;
 }>();
@@ -103,6 +104,18 @@ onUnmounted(() => {
     observer.disconnect();
   }
 });
+
+const userInput = useTemplateRef('userInput');
+watch(
+  () => props.loading,
+  () => {
+    if (props.loading === 'idle') {
+      nextTick(() => {
+        userInput.value?.textarea.focus();
+      });
+    }
+  }
+);
 
 const sendMessage = () => {
   if (!userMessage.value.trim()) return;
