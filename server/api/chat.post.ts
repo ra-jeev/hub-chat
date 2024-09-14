@@ -1,9 +1,9 @@
 export default defineEventHandler(async (event) => {
-  const { messages, params } = await readBody(event);
-  if (!messages || messages.length === 0 || !params) {
+  const { model, params } = await readBody(event);
+  if (!model || !params) {
     throw createError({
       statusCode: 400,
-      statusMessage: 'Missing messages or LLM params',
+      statusMessage: 'Missing chat model or params',
     });
   }
 
@@ -21,10 +21,10 @@ export default defineEventHandler(async (event) => {
   const ai = hubAI();
 
   try {
-    const result = await ai.run(params.model, {
+    const result = await ai.run(model, {
       messages: params.systemPrompt
-        ? [{ role: 'system', content: params.systemPrompt }, ...messages]
-        : messages,
+        ? [{ role: 'system', content: params.systemPrompt }, ...params.messages]
+        : params.messages,
       ...config,
     });
 
