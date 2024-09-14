@@ -79,7 +79,7 @@ const emit = defineEmits<{
 }>();
 
 const userMessage = ref('');
-const chatContainer = ref<HTMLElement | null>(null);
+const chatContainer = useTemplateRef('chatContainer');
 let observer: MutationObserver | null = null;
 
 onMounted(() => {
