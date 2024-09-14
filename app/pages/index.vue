@@ -31,7 +31,7 @@
 </template>
 
 <script setup lang="ts">
-import { useStorageAsync } from '@vueuse/core'
+import { useStorageAsync } from '@vueuse/core';
 import type { ChatMessage, LlmParams, LoadingType } from '~~/types';
 
 const isDrawerOpen = ref(false);
@@ -44,50 +44,41 @@ const defaultSettings: LlmParams = {
   stream: true,
 };
 
-const llmParams = useStorageAsync<LlmParams>('llmParams', { ...defaultSettings });
+const llmParams = useStorageAsync<LlmParams>('llmParams', {
+  ...defaultSettings,
+});
 const resetSettings = () => {
   llmParams.value = { ...defaultSettings };
 };
 
-const { getResponse, streamResponse } = useChat();
 const chatHistory = ref<ChatMessage[]>([]);
 const loading = ref<LoadingType>('idle');
 async function sendMessage(message: string) {
   chatHistory.value.push({ role: 'user', content: message });
 
   try {
-    if (llmParams.value.stream) {
-      loading.value = 'stream';
-      const messageGenerator = streamResponse(
-        '/api/chat',
-        chatHistory.value,
-        llmParams.value
-      );
+    loading.value = llmParams.value.stream ? 'stream' : 'message';
 
-      let responseAdded = false;
-      for await (const chunk of messageGenerator) {
-        if (responseAdded) {
-          // add the response to the current message
-          chatHistory.value[chatHistory.value.length - 1]!.content += chunk;
-        } else {
-          // add a new message to the chat history
-          chatHistory.value.push({
-            role: 'assistant',
-            content: chunk,
-          });
+    const response = useAIChat('/api/chat', llmParams.value.model, {
+      ...llmParams.value,
+      model: undefined,
+      messages: chatHistory.value,
+    })();
 
-          responseAdded = true;
-        }
+    let responseAdded = false;
+    for await (const chunk of response) {
+      if (responseAdded) {
+        // add the chunk to the current message's content
+        chatHistory.value[chatHistory.value.length - 1]!.content += chunk;
+      } else {
+        // add a new message to the chat history
+        chatHistory.value.push({
+          role: 'assistant',
+          content: chunk,
+        });
+
+        responseAdded = true;
       }
-    } else {
-      loading.value = 'message';
-      const response = await getResponse(
-        '/api/chat',
-        chatHistory.value,
-        llmParams.value
-      );
-
-      chatHistory.value.push({ role: 'assistant', content: response });
     }
   } catch (error) {
     console.error('Error sending message:', error);

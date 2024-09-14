@@ -10,7 +10,14 @@
         :step="step"
       />
     </template>
-    <URange :key="`${label}-${rangeKey}`" v-model="model" :min="min" :max="max" :step="step" size="sm" />
+    <URange
+      :key="`${label}-${rangeKey}`"
+      v-model="model"
+      :min="min"
+      :max="max"
+      :step="step"
+      size="sm"
+    />
   </UFormGroup>
 </template>
 
@@ -36,6 +43,8 @@ defineProps({
   },
 });
 
+// This is needed to force a re-render of the range component (using a key)
+// (to update the slider thumb), when value is read from localStorage
 const rangeKey = ref(0);
 onMounted(() => {
   rangeKey.value++;
