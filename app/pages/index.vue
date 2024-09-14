@@ -31,6 +31,7 @@
 </template>
 
 <script setup lang="ts">
+import { useStorageAsync } from '@vueuse/core'
 import type { ChatMessage, LlmParams, LoadingType } from '~~/types';
 
 const isDrawerOpen = ref(false);
@@ -43,9 +44,9 @@ const defaultSettings: LlmParams = {
   stream: true,
 };
 
-const llmParams = reactive<LlmParams>({ ...defaultSettings });
+const llmParams = useStorageAsync<LlmParams>('llmParams', { ...defaultSettings });
 const resetSettings = () => {
-  Object.assign(llmParams, defaultSettings);
+  llmParams.value = { ...defaultSettings };
 };
 
 const { getResponse, streamResponse } = useChat();
@@ -55,12 +56,12 @@ async function sendMessage(message: string) {
   chatHistory.value.push({ role: 'user', content: message });
 
   try {
-    if (llmParams.stream) {
+    if (llmParams.value.stream) {
       loading.value = 'stream';
       const messageGenerator = streamResponse(
         '/api/chat',
         chatHistory.value,
-        llmParams
+        llmParams.value
       );
 
       let responseAdded = false;
@@ -83,7 +84,7 @@ async function sendMessage(message: string) {
       const response = await getResponse(
         '/api/chat',
         chatHistory.value,
-        llmParams
+        llmParams.value
       );
 
       chatHistory.value.push({ role: 'assistant', content: response });

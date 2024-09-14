@@ -10,7 +10,7 @@
         :step="step"
       />
     </template>
-    <URange v-model="model" :min="min" :max="max" :step="step" size="sm" />
+    <URange :key="`${label}-${rangeKey}`" v-model="model" :min="min" :max="max" :step="step" size="sm" />
   </UFormGroup>
 </template>
 
@@ -34,5 +34,10 @@ defineProps({
     type: Number,
     default: undefined,
   },
+});
+
+const rangeKey = ref(0);
+onMounted(() => {
+  rangeKey.value++;
 });
 </script>
