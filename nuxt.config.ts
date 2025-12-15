@@ -1,21 +1,17 @@
-// https://nuxt.com/docs/api/configuration/nuxt-config
 export default defineNuxtConfig({
-  compatibilityDate: "2025-03-01",
+  compatibilityDate: '2025-07-15',
 
-  // https://nuxt.com/docs/getting-started/upgrade#testing-nuxt-4
-  future: { compatibilityVersion: 4 },
+  modules: ['nitro-cloudflare-dev', '@nuxt/eslint', '@nuxt/ui', '@nuxtjs/mdc'],
 
-  modules: ['@nuxt/eslint', '@nuxt/ui', '@nuxtjs/mdc'],
+  css: ['~/assets/css/main.css'],
 
-  css: ["~/assets/css/main.css"],
-
-  // https://hub.nuxt.com/docs/getting-started/installation#options
-  hub: {
-    ai: true,
-    cache: true,
-    workers: true,
-  },
-
-  // https://devtools.nuxt.com
   devtools: { enabled: true },
+
+  nitro: {
+    preset: 'cloudflare-module',
+    cloudflare: {
+      deployConfig: true,
+      nodeCompat: true,
+    },
+  },
 });

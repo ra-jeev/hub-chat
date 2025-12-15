@@ -1,0 +1,23 @@
+{
+  "$schema": "node_modules/wrangler/config-schema.json",
+  "name": "hub-chat",
+  "main": "./.output/server/index.mjs",
+  "compatibility_date": "2025-12-13",
+  "assets": {
+    "directory": "./.output/public/",
+    "binding": "ASSETS",
+  },
+  "observability": {
+    "enabled": true,
+  },
+  "ai": {
+    "binding": "AI",
+    "remote": true,
+  },
+  "kv_namespaces": [
+    {
+      "binding": "CACHE",
+      "id": "d9aeaf954f0c400f8119adcd97a04377",
+    },
+  ],
+}
