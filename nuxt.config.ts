@@ -5,8 +5,7 @@ export default defineNuxtConfig({
   // https://nuxt.com/docs/getting-started/upgrade#testing-nuxt-4
   future: { compatibilityVersion: 4 },
 
-  // https://nuxt.com/modules
-  modules: ["@nuxthub/core", "@nuxt/eslint", "@nuxt/ui", "@nuxtjs/mdc"],
+  modules: ['@nuxt/eslint', '@nuxt/ui', '@nuxtjs/mdc'],
 
   css: ["~/assets/css/main.css"],
 
