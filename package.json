@@ -16,7 +16,7 @@
     "@nuxt/eslint": "^1.12.1",
     "@nuxt/ui": "^4.2.1",
     "@nuxtjs/mdc": "^0.19.1",
-    "@vueuse/core": "^14.1.0",
+    "@vueuse/core": "^13.9.0",
     "nuxt": "^4.2.2",
     "vue": "^3.5.25",
     "vue-router": "^4.6.4"
@@ -24,7 +24,7 @@
   "devDependencies": {
     "@nuxt/eslint-config": "^1.12.1",
     "eslint": "^9.39.2",
-    "h3": "2.0.1-rc.6",
+    "h3": "^1.15.4",
     "nitro-cloudflare-dev": "^0.2.2",
     "nitropack": "^2.12.9",
     "typescript": "^5.9.3",
