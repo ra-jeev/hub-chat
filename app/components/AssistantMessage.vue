@@ -18,7 +18,7 @@
 </template>
 
 <script setup lang="ts">
-import { parseMarkdown } from "#imports";
+import { parseMarkdown } from '#imports';
 
 const props = defineProps<{
   content: string;

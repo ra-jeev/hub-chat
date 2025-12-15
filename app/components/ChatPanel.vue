@@ -53,7 +53,7 @@
 </template>
 
 <script setup lang="ts">
-import type { ChatMessage, LoadingType } from "~~/types";
+import type { ChatMessage, LoadingType } from '~~/types';
 
 const props = defineProps<{
   chatHistory: ChatMessage[];
@@ -66,8 +66,8 @@ const emit = defineEmits<{
   showDrawer: [];
 }>();
 
-const userMessage = ref("");
-const chatContainer = useTemplateRef("chatContainer");
+const userMessage = ref('');
+const chatContainer = useTemplateRef('chatContainer');
 let observer: MutationObserver | null = null;
 
 onMounted(() => {
@@ -92,11 +92,11 @@ onUnmounted(() => {
   }
 });
 
-const userInput = useTemplateRef("userInput");
+const userInput = useTemplateRef('userInput');
 watch(
   () => props.loading,
   () => {
-    if (props.loading === "idle") {
+    if (props.loading === 'idle') {
       nextTick(() => {
         userInput.value?.textareaRef?.focus();
       });
@@ -107,8 +107,8 @@ watch(
 const sendMessage = () => {
   if (!userMessage.value.trim()) return;
 
-  emit("message", userMessage.value);
+  emit('message', userMessage.value);
 
-  userMessage.value = "";
+  userMessage.value = '';
 };
 </script>

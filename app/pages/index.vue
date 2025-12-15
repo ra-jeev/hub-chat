@@ -22,7 +22,7 @@
     <USeparator orientation="vertical" class="hidden md:block" />
 
     <ChatPanel
-      class="flex-grow"
+      class="grow"
       :chat-history="chatHistory"
       :loading="loading"
       @clear="chatHistory = []"
@@ -33,20 +33,20 @@
 </template>
 
 <script setup lang="ts">
-import { useStorageAsync } from "@vueuse/core";
-import type { ChatMessage, LlmParams, LoadingType } from "~~/types";
+import { useStorageAsync } from '@vueuse/core';
+import type { ChatMessage, LlmParams, LoadingType } from '~~/types';
 
 const isDrawerOpen = ref(false);
 
 const defaultSettings: LlmParams = {
-  model: "@cf/meta/llama-3.2-3b-instruct",
+  model: '@cf/meta/llama-3.2-3b-instruct',
   temperature: 0.6,
   maxTokens: 512,
-  systemPrompt: "You are a helpful assistant.",
+  systemPrompt: 'You are a helpful assistant.',
   stream: true,
 };
 
-const llmParams = useStorageAsync<LlmParams>("llmParams", {
+const llmParams = useStorageAsync<LlmParams>('llmParams', {
   ...defaultSettings,
 });
 const resetSettings = () => {
@@ -54,18 +54,18 @@ const resetSettings = () => {
 };
 
 const chatHistory = ref<ChatMessage[]>([]);
-const loading = ref<LoadingType>("idle");
+const loading = ref<LoadingType>('idle');
 async function sendMessage(message: string) {
   chatHistory.value.push({
-    role: "user",
+    role: 'user',
     content: message,
     id: String(Date.now()),
   });
 
   try {
-    loading.value = llmParams.value.stream ? "stream" : "message";
+    loading.value = llmParams.value.stream ? 'stream' : 'message';
 
-    const response = useAIChat("/api/chat", llmParams.value.model, {
+    const response = useAIChat('/api/chat', llmParams.value.model, {
       ...llmParams.value,
       model: undefined,
       messages: chatHistory.value,
@@ -79,7 +79,7 @@ async function sendMessage(message: string) {
       } else {
         // add a new message to the chat history
         chatHistory.value.push({
-          role: "assistant",
+          role: 'assistant',
           content: chunk,
           id: String(Date.now()),
         });
@@ -88,9 +88,9 @@ async function sendMessage(message: string) {
       }
     }
   } catch (error) {
-    console.error("Error sending message:", error);
+    console.error('Error sending message:', error);
   } finally {
-    loading.value = "idle";
+    loading.value = 'idle';
   }
 }
 </script>
