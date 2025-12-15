@@ -12,7 +12,7 @@
       </UTooltip>
     </div>
     <div class="flex items-center gap-x-4">
-      <ColorMode />
+      <UColorModeButton />
       <UButton
         icon="i-simple-icons-github"
         color="neutral"
