@@ -24,3 +24,6 @@ logs
 !.env.example
 
 .wrangler
+
+# Dev Crumbs directory
+.devcrumbs
