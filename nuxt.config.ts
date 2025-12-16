@@ -13,5 +13,12 @@ export default defineNuxtConfig({
       deployConfig: true,
       nodeCompat: true,
     },
+
+    storage: {
+      cache: {
+        driver: 'cloudflare-kv-binding',
+        binding: 'CACHE',
+      },
+    },
   },
 });
