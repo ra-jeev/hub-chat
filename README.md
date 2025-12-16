@@ -1,12 +1,17 @@
 # Cloudflare Workers AI LLM Playground with Nuxt 💬
 
-[![NuxtHub AI Chat](https://github.com/user-attachments/assets/f393167e-7d21-4d7b-bacf-101103c1d093)](https://hub-chat.rajeevs.workers.dev)
+[![Cloudflare Workers AI Chat](https://github.com/user-attachments/assets/f393167e-7d21-4d7b-bacf-101103c1d093)](https://hub-chat.rajeevs.workers.dev)
 
 Demo: [https://hub-chat.rajeevs.workers.dev](https://hub-chat.rajeevs.workers.dev)
 
-[![Deploy to NuxtHub](https://hub.nuxt.com/button.svg)](https://hub.nuxt.com/new?template=ai-chat)
+## Update (12/15/2025)
 
-## Udpate (04/23/2025)
+The project has been migrated to use `nitro-cloudflare-dev` for local development with Cloudflare Workers AI. Alos updated to use Nuxt & Nuxt UI UI v4 (doesn't use Nuxt UI's new chat components). 
+
+> [!WARNING]
+> The project no longer uses `nuxthub` after hubAI deprecation from NuxtHub. For older implementation using NuxtHub, please see the `nuxthub` branch.
+
+## Update (04/23/2025)
 
 The project is now deployable on Cloudflare Workers using NuxtHub. The main branch supports `workers` deployment (along with Nuxt UI v3). To deploy using Cloudflare Pages + Workers, please see the `pages` branch.
 
@@ -32,14 +37,14 @@ This project is a chat interface to interact with various text generation models
 * [Nuxt](https://nuxt.com): Vue.js framework for the application foundation
 * [Nuxt UI](https://ui.nuxt.com): Module for creating a sleek and responsive interface
 * [Nuxt MDC](https://github.com/nuxt-modules/mdc): For parsing and displaying chat messages
-* [NuxtHub](https://hub.nuxt.com): Deployment and administration platform for Nuxt, powered by Cloudflare
+* [Cloudflare Workers AI](https://workers.cloudflare.com/solutions/ai): For accessing various LLM models and generating text responses
+* [Cloudflare Workers](https://workers.cloudflare.com): Serverless platform to host the application
 
 ## Prerequisites
 
 * [Cloudflare Account](https://cloudflare.com): Required for using Workers AI models and deploying the project on Cloudflare Pages
-* [NuxtHub Account](https://hub.nuxt.com): For managing NuxtHub apps and using AI in development
 
-> You can deploy and manage this application with a free Cloudflare and free NuxtHub account.
+> You can deploy and manage this application with a free Cloudflare account.
 
 ## Setup
 
@@ -49,26 +54,7 @@ This project is a chat interface to interact with various text generation models
 pnpm i
 ```
 
-2. Rename `.env.example` to `.env` and update the following environment variables (for NuxtHub project key see point 3):
-
-```bash
-# Directly set your nuxthub project key without running npx nuxthub link
-NUXT_HUB_PROJECT_KEY=your_nuxthub_project_key
-# how to find account id for workers/pages https://developers.cloudflare.com/fundamentals/setup/find-account-and-zone-ids/#find-account-id-workers-and-pages
-CLOUDFLARE_ACCOUNT_ID=your_cloudflare_account_id
-# How to create API token https://developers.cloudflare.com/fundamentals/api/get-started/create-token/
-CLOUDFLARE_API_TOKEN=your_cloudflare_api_token
-```
-
-Cloudflare AccountId and API token (with Workers AI Read permissions) are required for auto-updating the AI models list (cached in nitro for a day, see `server/api/models.get.ts`).
-
-3. If you didn't set your NuxtHub project key in point 2 above, link your NuxtHub project to use AI models in development (it will ask you to create one if you don't have any)
-
-```bash
-npx nuxthub link
-```
-
-4. Start the application in development mode
+2. Start the application in development mode
 
 ```bash
 pnpm dev
@@ -78,26 +64,20 @@ Open <http://localhost:3000> in your browser.
 
 ## Deployment
 
-[![Deploy to NuxtHub](https://hub.nuxt.com/button.svg)](https://hub.nuxt.com/new?template=ai-chat)
-
-### NuxtHub Admin
+### Cloudflare Dashboard Deployment
 
 * Push your code to a GitHub repository.
-* Link the repository with NuxtHub.
+* Link the repository to Cloudflare Workers.
 * Deploy from the Admin console.
 
-[Learn more about Git integration](https://hub.nuxt.com/docs/getting-started/deploy#cloudflare-pages-ci)
-
-### Deploy via NuxtHub CLI
+### Deploy via Wrangler CLI
 
 ```bash
-npx nuxthub deploy
+pnpm deploy
 ```
 
-[Learn more about CLI deployment](https://hub.nuxt.com/docs/getting-started/deploy#nuxthub-cli)
-
 > [!NOTE]
-> Do not forget to add the environment variables to your project's settings
+> You need to be logged in to Cloudflare CLI using `wrangler login` before deploying.
 
 ## License
 
