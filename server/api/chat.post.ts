@@ -30,15 +30,18 @@ export default defineEventHandler(async (event) => {
     });
 
     if (params.stream) {
+      if (!(result instanceof ReadableStream)) {
+        throw createError({
+          statusCode: 500,
+          statusMessage: 'Expected a stream response, but did not receive one.',
+        });
+      }
+
       setResponseHeader(event, 'Content-Type', 'text/event-stream');
-      return sendStream(event, result as ReadableStream);
+      return sendStream(event, result);
     }
 
-    return (
-      result as {
-        response: string;
-      }
-    ).response;
+    return (result as unknown as { response?: string }).response;
   } catch (error) {
     console.error(error);
     throw createError({
