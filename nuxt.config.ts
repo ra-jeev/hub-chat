@@ -14,6 +14,12 @@ export default defineNuxtConfig({
       nodeCompat: true,
     },
 
+    typescript: {
+      tsConfig: {
+        include: ['../emv.d.ts'],
+      },
+    },
+
     storage: {
       cache: {
         driver: 'cloudflare-kv-binding',
